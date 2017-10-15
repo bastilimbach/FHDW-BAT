@@ -1,0 +1,13 @@
+[Unit]
+Description=BAT API
+After=network.target
+[Service]
+ExecStart=/var/www/bat_backend/app/server.js
+Restart=always
+User=nobody
+Group=nobody
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+WorkingDirectory=/var/www/bat_backend/app/
+[Install]
+WantedBy=multi-user.target
