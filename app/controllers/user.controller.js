@@ -1,12 +1,17 @@
 const User = require('../models/user.model')
 const Location = require('../models/location.model')
+const Crypto = require('crypto')
 
 function getAllUsers(callback) {
   User.find({}, (err, users) => {
     if (!err) {
       const userMap = {}
       users.forEach((user) => {
-        userMap[user._id] = user
+        userMap[user._id] = {
+          username: user.username,
+          createdAt: user.createdAt,
+          updatedAt: user.updatedAt,
+        }
       })
       callback(200, { success: true, user: userMap })
     } else {
@@ -15,12 +20,20 @@ function getAllUsers(callback) {
   })
 }
 
-function getUserWithID(id, callback) {
+function getUserWithUsername(username, callback) {
   User.find({
-    _id: id,
+    username,
   }, (err, raw) => {
     if (!err) {
-      callback(200, { success: true, message: raw })
+      const userMap = {}
+      raw.forEach((user) => {
+        userMap[user._id] = {
+          username: user.username,
+          createdAt: user.createdAt,
+          updatedAt: user.updatedAt,
+        }
+      })
+      callback(200, { success: true, message: userMap })
     } else {
       callback(500, { success: false, message: err })
     }
@@ -29,25 +42,32 @@ function getUserWithID(id, callback) {
 
 function createNewUser(params, callback) {
   const userLocation = new Location()
-  userLocation.save((locationError) => {
-    if (locationError) {
-      callback(500, { success: false, message: locationError })
-    } else {
-      const newUser = new User(params)
-      Object.assign(newUser, { location: userLocation._id })
-      newUser.save((userError) => {
-        if (!userError) {
-          callback(200, { success: true, message: newUser })
+  Crypto.randomBytes(12, (cryptoError, buffer) => {
+    if (!cryptoError) {
+      const token = buffer.toString('hex')
+      userLocation.save((locationError) => {
+        if (locationError) {
+          callback(500, { success: false, message: locationError })
         } else {
-          callback(500, { success: false, message: userError })
+          const newUser = new User(params)
+          Object.assign(newUser, { location: userLocation._id, token })
+          newUser.save((userError) => {
+            if (!userError) {
+              callback(200, { success: true, message: newUser })
+            } else {
+              callback(500, { success: false, message: userError })
+            }
+          })
         }
       })
+    } else {
+      callback(500, { success: false, message: cryptoError })
     }
   })
 }
 
-function updateUserWithID(id, params, callback) {
-  User.update({ _id: id }, params, (err, raw) => {
+function updateUserWithUsername(username, params, callback) {
+  User.update({ username }, params, (err, raw) => {
     if (!err) {
       callback(200, { success: true, message: raw })
     } else {
@@ -56,8 +76,8 @@ function updateUserWithID(id, params, callback) {
   })
 }
 
-function deleteUserWithID(id, callback) {
-  User.remove({ _id: id }, (err, raw) => {
+function deleteUserWithUsername(username, callback) {
+  User.remove({ username }, (err, raw) => {
     if (!err) {
       callback(200, { success: true, user: raw })
     } else {
@@ -69,7 +89,7 @@ function deleteUserWithID(id, callback) {
 module.exports = {
   getAllUsers,
   createNewUser,
-  getUserWithID,
-  updateUserWithID,
-  deleteUserWithID,
+  getUserWithUsername,
+  updateUserWithUsername,
+  deleteUserWithUsername,
 }

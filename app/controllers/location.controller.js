@@ -1,16 +1,25 @@
 const User = require('../models/user.model')
 const Location = require('../models/location.model')
 
-function getLocationOfUserWithID(id, callback) {
+function getLocationOfUserWithUsername(username, callback) {
   User.find({
-    _id: id,
+    username,
   }, (userError, users) => {
     if (!userError) {
       Location.find({
         _id: users[0].location,
       }, (locationError, locations) => {
         if (!locationError) {
-          callback(200, { success: true, location: locations })
+          const locationMap = {}
+          locations.forEach((location) => {
+            locationMap[location._id] = {
+              latitude: location.latitude,
+              longitude: location.longitude,
+              createdAt: location.createdAt,
+              updatedAt: location.updatedAt,
+            }
+          })
+          callback(200, { success: true, location: locationMap })
         } else {
           callback(500, { success: false, message: locationError })
         }
@@ -21,9 +30,9 @@ function getLocationOfUserWithID(id, callback) {
   })
 }
 
-function updateLocationOfUserWithID(id, params, callback) {
+function updateLocationOfUserWithUsername(username, params, callback) {
   User.find({
-    _id: id,
+    username,
   }, (userError, users) => {
     if (!userError) {
       Location.update({
@@ -41,4 +50,4 @@ function updateLocationOfUserWithID(id, params, callback) {
   })
 }
 
-module.exports = { getLocationOfUserWithID, updateLocationOfUserWithID }
+module.exports = { getLocationOfUserWithUsername, updateLocationOfUserWithUsername }

@@ -715,6 +715,10 @@ expand-range@^1.8.1:
   dependencies:
     fill-range "^2.1.0"
 
+express-bearer-token@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/express-bearer-token/-/express-bearer-token-2.1.0.tgz#d5c823c4d180f9d2b08798fced3dde9cc9c4906e"
+
 express@^4.16.2:
   version "4.16.2"
   resolved "https://registry.yarnpkg.com/express/-/express-4.16.2.tgz#e35c6dfe2d64b7dca0a5cd4f21781be3299e076c"

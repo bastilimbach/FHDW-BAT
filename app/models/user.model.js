@@ -10,6 +10,15 @@ const UserSchema = new mongoose.Schema({
     ref: 'Location',
     required: true,
   },
+  destination: {
+    type: Number,
+    ref: 'Destination',
+    default: null,
+  },
+  token: {
+    type: String,
+    required: true,
+  },
   updatedAt: {
     type: Date,
     default: Date.now,
