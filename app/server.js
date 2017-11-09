@@ -8,8 +8,6 @@ const mongoose = require('mongoose')
 const server = http.createServer(appServer)
 wsServer.createServer(server)
 
-console.log(server)
-
 mongoose.Promise = global.Promise
 mongoose.connect(config.db.url, config.db.mongoDBConfig).then(() => {
   console.log('Mongo DB connection established!') // eslint-disable-line no-console
