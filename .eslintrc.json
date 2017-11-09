@@ -8,6 +8,9 @@
         "quotes": [
             "error",
             "single"
-        ]
+        ],
+        "no-underscore-dangle": "off",
+        "max-len": "off",
+        "no-new": "off"
     }
 }
