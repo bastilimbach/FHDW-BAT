@@ -1,6 +1,6 @@
 module.exports = {
   server: {
-    domain: 'gcp.sebastianlimbach.com',
+    domain: process.env.DOMAIN || 'gcp.sebastianlimbach.com',
     port: 3000,
   },
   db: {

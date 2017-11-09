@@ -8,12 +8,19 @@ services:
   api:
     image: api
     restart: always
-    build: .
+    build:
+      context: .
+      args:
+        mongodb: ${MONGODB_URL}
+        admin_token: ${ADMIN_TOKEN}
+        server_domain: ${DOMAIN}
     depends_on:
       - mongodb
     ports:
       - 443:3000
       - 80:3000
+    volumes:
+      - '/etc/letsencrypt/:/certs/letsencrypt/'
     networks:
       - webgateway
 
