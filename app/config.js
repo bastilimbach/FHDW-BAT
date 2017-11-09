@@ -1,6 +1,7 @@
 module.exports = {
   server: {
-    port: process.env.PORT || 3000,
+    domain: 'gcp.sebastianlimbach.com',
+    port: 3000,
   },
   db: {
     url: process.env.MONGODB_URL || 'mongodb://localhost/',
