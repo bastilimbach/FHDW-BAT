@@ -3,8 +3,10 @@ const UserController = require('./controllers/user.controller')
 const LocationController = require('./controllers/location.controller')
 const DestinationController = require('./controllers/destination.controller')
 const Auth = require('./controllers/auth.controller')
+const wsServer = require('./ws.server')
 
 const router = express.Router()
+const wss = wsServer.createServer()
 
 router.route('/')
   .get((req, res) => {
@@ -113,6 +115,7 @@ router.route('/:username/location')
           latitude: req.body.latitude,
           longitude: req.body.longitude,
         }
+        wss.sendMsg(`Location updated: ${newLocation.latitude} - ${newLocation.longitude}`)
         LocationController.updateLocationOfUserWithUsername(req.params.username, newLocation, (status, response) => {
           res.status(status)
           res.json(response)

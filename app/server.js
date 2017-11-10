@@ -4,7 +4,6 @@ const http = require('http')
 const https = require('https')
 const fs = require('fs')
 const appServer = require('./app.server')
-const wsServer = require('./ws.server')
 const mongoose = require('mongoose')
 
 mongoose.Promise = global.Promise
@@ -26,7 +25,6 @@ if (process.env.NODE_ENV === 'production') {
   server = http.createServer(appServer)
 }
 
-wsServer.createServer(server)
 server.listen(config.server.port, () => {
   console.log(`API running on port ${config.server.port}!`) // eslint-disable-line no-console
 })
