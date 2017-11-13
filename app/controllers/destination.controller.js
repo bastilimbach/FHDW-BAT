@@ -1,6 +1,81 @@
 const User = require('../models/user.model')
 const Destination = require('../models/destination.model')
 
+function getAllDestinations(callback) {
+  Destination.find({}, (error, destinations) => {
+    if (!error) {
+      const destinationMap = {}
+      destinations.forEach((destination) => {
+        destinationMap[destination._id] = {
+          id: destination.destinationID,
+          name: destination.name,
+          latitude: destination.latitude,
+          longitude: destination.longitude,
+          createdAt: destination.createdAt,
+          updatedAt: destination.updatedAt,
+        }
+      })
+      callback(200, { success: true, destinations: destinationMap })
+    } else {
+      callback(500, { success: false, message: error })
+    }
+  })
+}
+
+function getDestinationWithID(id, callback) {
+  Destination.find({
+    destinationID: id,
+  }, (error, raw) => {
+    if (!error) {
+      const destinationMap = {}
+      raw.forEach((destination) => {
+        destinationMap[destination._id] = {
+          id: destination.destinationID,
+          name: destination.name,
+          latitude: destination.latitude,
+          longitude: destination.longitude,
+          createdAt: destination.createdAt,
+          updatedAt: destination.updatedAt,
+        }
+      })
+      callback(200, { success: true, message: destinationMap })
+    } else {
+      callback(500, { success: false, message: error })
+    }
+  })
+}
+
+function createDestination(params, callback) {
+  const newDestination = new Destination(params)
+  newDestination.save((error) => {
+    if (!error) {
+      callback(200, { success: true, message: newDestination })
+    } else {
+      callback(500, { success: false, message: error })
+    }
+  })
+}
+
+function updateDestinationWithID(id, params, callback) {
+  Destination.update({ destinationID: id }, params, (err, raw) => {
+    if (!err) {
+      callback(200, { success: true, message: raw })
+    } else {
+      callback(500, { success: false, destination: err })
+    }
+  })
+}
+
+function deleteDestinationWithID(id, callback) {
+  Destination.remove({ destinationID: id }, (err, raw) => {
+    if (!err) {
+      callback(200, { success: true, destinations: raw })
+    } else {
+      callback(500, { success: false, message: err })
+    }
+  })
+}
+
 function getDestinationOfUserWithUsername(username, callback) {
   User.find({
     username,
@@ -13,6 +88,7 @@ function getDestinationOfUserWithUsername(username, callback) {
           const destinationMap = {}
           destinations.forEach((destination) => {
             destinationMap[destination._id] = {
+              id: destination.destinationID,
               name: destination.name,
               latitude: destination.latitude,
               longitude: destination.longitude,
@@ -36,9 +112,17 @@ function updateDestinationOfUserWithUsername(username, destinationID, callback) 
     if (!err) {
       callback(200, { success: true, message: raw })
     } else {
-      callback(500, { success: false, user: err })
+      callback(500, { success: false, destination: err })
     }
   })
 }
 
-module.exports = { getDestinationOfUserWithUsername, updateDestinationOfUserWithUsername }
+module.exports = {
+  getAllDestinations,
+  getDestinationWithID,
+  createDestination,
+  updateDestinationWithID,
+  deleteDestinationWithID,
+  getDestinationOfUserWithUsername,
+  updateDestinationOfUserWithUsername,
+}
