@@ -1,39 +1,58 @@
 const User = require('../models/user.model')
-const Location = require('../models/location.model')
-const Crypto = require('crypto')
 
 function getAllUsers(callback) {
   User.find({}, (err, users) => {
     if (!err) {
-      const userMap = {}
+      const userMap = []
       users.forEach((user) => {
-        userMap[user._id] = {
-          username: user.username,
-          createdAt: user.createdAt,
-          updatedAt: user.updatedAt,
-        }
+        userMap.push(user)
       })
-      callback(200, { success: true, user: userMap })
+      callback(200, { success: true, users: userMap })
     } else {
       callback(500, { success: false, message: err })
     }
   })
 }
 
-function getUserWithUsername(username, callback) {
+function getUserByUsername(username, callback) {
   User.find({
     username,
   }, (err, raw) => {
     if (!err) {
-      const userMap = {}
       raw.forEach((user) => {
-        userMap[user._id] = {
-          username: user.username,
-          createdAt: user.createdAt,
-          updatedAt: user.updatedAt,
-        }
+        callback(200, { success: true, message: user })
       })
-      callback(200, { success: true, message: userMap })
+    } else {
+      callback(500, { success: false, message: err })
+    }
+  })
+}
+
+function getMessageByUsername(username, callback) {
+  User.find({
+    username,
+  }, (err, raw) => {
+    if (!err) {
+      if (raw.length === 1) {
+        callback(200, { success: true, message: raw[0].message })
+      } else {
+        callback(400, { success: false, message: 'username not unique or found' })
+      }
+    } else {
+      callback(500, { success: false, message: err })
+    }
+  })
+}
+function getLocationByUsername(username, callback) {
+  User.find({
+    username,
+  }, (err, raw) => {
+    if (!err) {
+      if (raw.length === 1) {
+        callback(200, { success: true, latitude: raw[0].latitude, longitude: raw[0].longitude })
+      } else {
+        callback(400, { success: false, message: 'username not unique or found' })
+      }
     } else {
       callback(500, { success: false, message: err })
     }
@@ -41,32 +60,17 @@ function getUserWithUsername(username, callback) {
 }
 
 function createNewUser(params, callback) {
-  const userLocation = new Location()
-  Crypto.randomBytes(12, (cryptoError, buffer) => {
-    if (!cryptoError) {
-      const token = buffer.toString('hex')
-      userLocation.save((locationError) => {
-        if (locationError) {
-          callback(500, { success: false, message: locationError })
-        } else {
-          const newUser = new User(params)
-          Object.assign(newUser, { location: userLocation._id, token })
-          newUser.save((userError) => {
-            if (!userError) {
-              callback(200, { success: true, message: newUser })
-            } else {
-              callback(500, { success: false, message: userError })
-            }
-          })
-        }
-      })
+  const newUser = new User(params)
+  newUser.save((userError) => {
+    if (!userError) {
+      callback(200, { success: true, message: newUser })
     } else {
-      callback(500, { success: false, message: cryptoError })
+      callback(500, { success: false, message: userError })
     }
   })
 }
 
-function updateUserWithUsername(username, params, callback) {
+function updateUser(username, params, callback) {
   User.update({ username }, params, (err, raw) => {
     if (!err) {
       callback(200, { success: true, message: raw })
@@ -76,7 +80,7 @@ function updateUserWithUsername(username, params, callback) {
   })
 }
 
-function deleteUserWithUsername(username, callback) {
+function deleteUserByUsername(username, callback) {
   User.remove({ username }, (err, raw) => {
     if (!err) {
       callback(200, { success: true, user: raw })
@@ -89,7 +93,9 @@ function deleteUserWithUsername(username, callback) {
 module.exports = {
   getAllUsers,
   createNewUser,
-  getUserWithUsername,
-  updateUserWithUsername,
-  deleteUserWithUsername,
+  getUserByUsername,
+  getMessageByUsername,
+  getLocationByUsername,
+  updateUser,
+  deleteUserByUsername,
 }

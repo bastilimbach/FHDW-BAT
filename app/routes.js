@@ -1,9 +1,9 @@
 const express = require('express')
 const UserController = require('./controllers/user.controller')
-const LocationController = require('./controllers/location.controller')
 const DestinationController = require('./controllers/destination.controller')
 const Auth = require('./controllers/auth.controller')
 const wsServer = require('./ws.server')
+const Crypto = require('crypto')
 
 const router = express.Router()
 const wss = wsServer.createServer()
@@ -24,15 +24,20 @@ router.route('/')
   .post((req, res) => {
     //  Create new user
     if (Auth.isAdmin(req)) {
-      const creationParams = {
-        username: req.body.username,
-      }
-      UserController.createNewUser(creationParams, (status, response) => {
-        res.status(status)
-        res.json(response)
+      Crypto.randomBytes(12, (cryptoError, buffer) => {
+        if (!cryptoError) {
+          const creationParams = {
+            username: req.body.username,
+            token: buffer.toString('hex'),
+          }
+          UserController.createNewUser(creationParams, (status, response) => {
+            res.status(status)
+            res.json(response)
+          })
+        } else {
+          res.status(401).json({ success: false, message: 'Unauthorized' })
+        }
       })
-    } else {
-      res.status(401).json({ success: false, message: 'Unauthorized' })
     }
   })
 
@@ -97,7 +102,7 @@ router.route('/:username/location')
     // Get user coordinates
     Auth.authenticateUser(req.params.username, req, (authenticated) => {
       if (authenticated) {
-        LocationController.getLocationOfUserWithUsername(req.params.username, (status, response) => {
+        UserController.getLocationByUsername(req.params.username, (status, response) => {
           res.status(status)
           res.json(response)
         })
@@ -116,7 +121,7 @@ router.route('/:username/location')
           longitude: req.body.longitude,
         }
         wss.sendMsg(`Location updated: ${newLocation.latitude} - ${newLocation.longitude}`)
-        LocationController.updateLocationOfUserWithUsername(req.params.username, newLocation, (status, response) => {
+        UserController.updateUser(req.params.username, newLocation, (status, response) => {
           res.status(status)
           res.json(response)
         })
@@ -146,6 +151,34 @@ router.route('/:username/destination')
     Auth.authenticateUser(req.params.username, req, (authenticated) => {
       if (authenticated) {
         DestinationController.updateDestinationOfUserWithUsername(req.params.username, req.body.destinationID, (status, response) => {
+          res.status(status)
+          res.json(response)
+        })
+      } else {
+        res.status(401).json({ success: false, message: 'Unauthorized' })
+      }
+    })
+  })
+
+router.route('/:username/message')
+  //  Get user message
+  .get((req, res) => {
+    Auth.authenticateUser(req.params.username, req, (authenticated) => {
+      if (authenticated) {
+        UserController.getMessageUsername(req.params.username, (status, response) => {
+          res.status(status)
+          res.json(response)
+        })
+      } else {
+        res.status(401).json({ success: false, message: 'Unauthorized' })
+      }
+    })
+  })
+  .put((req, res) => {
+    //  Update user message
+    Auth.authenticateUser(req.params.username, req, (authenticated) => {
+      if (authenticated) {
+        UserController.updateUser(req.params.username, { message: req.body.message }, (status, response) => {
           res.status(status)
           res.json(response)
         })

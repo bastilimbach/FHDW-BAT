@@ -8,7 +8,7 @@ function createServer() {
     wsServer.client = ws
   })
   wsServer.sendMsg = function sendMsg(msg) {
-    wsServer.client.send(msg)
+    if (wsServer.client !== undefined && wsServer.client.readyState === WebSocket.OPEN)wsServer.client.send(msg)
   }
   return wsServer
 }

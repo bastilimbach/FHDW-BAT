@@ -10,6 +10,9 @@
     "lint:fix": "eslint --fix app/**"
   },
   "author": "Sebastian Limbach",
+  "contributors": [
+    "Tobias Reim"
+  ],
   "license": "MIT",
   "private": true,
   "dependencies": {
