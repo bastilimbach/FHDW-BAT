@@ -1,18 +1,9 @@
 const express = require('express')
-<<<<<<< HEAD:app/routes.js
-const UserController = require('./controllers/user.controller')
-const DestinationController = require('./controllers/destination.controller')
-const Auth = require('./controllers/auth.controller')
-const wsServer = require('./ws.server')
-const Crypto = require('crypto')
-=======
 const UserController = require('../controllers/user.controller')
-const LocationController = require('../controllers/location.controller')
 const DestinationController = require('../controllers/destination.controller')
 const Auth = require('../controllers/auth.controller')
 const wsServer = require('../ws.server')
->>>>>>> bc64a2e4ce1866b7ebcbe189cdfaee409e204db6:app/routes/user.routes.js
-
+const Crypto = require('crypto')
 const router = express.Router()
 const wss = wsServer.createServer()
 
