@@ -1,13 +1,16 @@
+DOMAIN="https://gcp.sebastianlimbach.com"
+TOKEN="sebastian"
+
 curl -X DELETE \
-  http://localhost:3000/destination/ \
-  -H 'authorization: Bearer sebastian' \
+  ${DOMAIN}/destination/ \
+  -H 'authorization: Bearer '${TOKEN} \
   -H 'cache-control: no-cache' \
   -H 'content-type: application/json' \
   -H 'postman-token: 0ad0c0d0-81e5-1454-623a-9857bc0d7265'
   
 curl -X POST \
-  http://localhost:3000/destination/ \
-  -H 'authorization: Bearer sebastian' \
+  ${DOMAIN}/destination/ \
+  -H 'authorization: Bearer '${TOKEN} \
   -H 'cache-control: no-cache' \
   -H 'content-type: application/json' \
   -H 'postman-token: 5fbefeb9-29b5-93cb-31fa-d8cca90cc8c3' \
@@ -18,8 +21,8 @@ curl -X POST \
 	"longitude":7.118303
 }'
 curl -X POST \
-  http://localhost:3000/destination/ \
-  -H 'authorization: Bearer sebastian' \
+  ${DOMAIN}/destination/ \
+  -H 'authorization: Bearer '${TOKEN} \
   -H 'cache-control: no-cache' \
   -H 'content-type: application/json' \
   -H 'postman-token: 5fbefeb9-29b5-93cb-31fa-d8cca90cc8c3' \
@@ -30,8 +33,8 @@ curl -X POST \
 	"longitude":8.736781
 }'
 curl -X POST \
-  http://localhost:3000/destination/ \
-  -H 'authorization: Bearer sebastian' \
+  ${DOMAIN}/destination/ \
+  -H 'authorization: Bearer '${TOKEN} \
   -H 'cache-control: no-cache' \
   -H 'content-type: application/json' \
   -H 'postman-token: 5fbefeb9-29b5-93cb-31fa-d8cca90cc8c3' \
@@ -42,8 +45,8 @@ curl -X POST \
 	"longitude":8.569027
 }'
 curl -X POST \
-  http://localhost:3000/destination/ \
-  -H 'authorization: Bearer sebastian' \
+  ${DOMAIN}/destination/ \
+  -H 'authorization: Bearer '${TOKEN} \
   -H 'cache-control: no-cache' \
   -H 'content-type: application/json' \
   -H 'postman-token: 5fbefeb9-29b5-93cb-31fa-d8cca90cc8c3' \
@@ -54,8 +57,8 @@ curl -X POST \
 	"longitude":8.736287
 }'
 curl -X POST \
-  http://localhost:3000/destination/ \
-  -H 'authorization: Bearer sebastian' \
+  ${DOMAIN}/destination/ \
+  -H 'authorization: Bearer '${TOKEN} \
   -H 'cache-control: no-cache' \
   -H 'content-type: application/json' \
   -H 'postman-token: 5fbefeb9-29b5-93cb-31fa-d8cca90cc8c3' \
