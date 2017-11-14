@@ -32,18 +32,18 @@ function getDestinationWithID(id, callback) {
     destinationID: id,
   }, (error, raw) => {
     if (!error) {
-      const destinationMap = {}
+      const destinationMap = []
       raw.forEach((destination) => {
-        destinationMap[destination._id] = {
+        destinationMap.push({
           id: destination.destinationID,
           name: destination.name,
           latitude: destination.latitude,
           longitude: destination.longitude,
           createdAt: destination.createdAt,
           updatedAt: destination.updatedAt,
-        }
+        })
       })
-      callback(200, { success: true, message: destinationMap })
+      callback(200, { success: true, destination: destinationMap })
     } else {
       callback(500, { success: false, message: error })
     }
@@ -54,7 +54,7 @@ function createDestination(params, callback) {
   const newDestination = new Destination(params)
   newDestination.save((error) => {
     if (!error) {
-      callback(200, { success: true, message: newDestination })
+      callback(200, { success: true, destination: newDestination })
     } else {
       callback(500, { success: false, message: error })
     }
