@@ -86,6 +86,16 @@ function updateUser(username, params, callback) {
   })
 }
 
+function updateDestinationOfUserWithUsername(username, destinationID, callback) {
+  User.update({ username }, { destination: destinationID }, (err, raw) => {
+    if (!err) {
+      callback(200, { success: true, message: raw })
+    } else {
+      callback(500, { success: false, destination: err })
+    }
+  })
+}
+
 function deleteUserByUsername(username, callback) {
   User.remove({ username }, (err, raw) => {
     if (!err) {
@@ -104,4 +114,6 @@ module.exports = {
   getLocationByUsername,
   updateUser,
   deleteUserByUsername,
+  updateDestinationOfUserWithUsername,
+
 }

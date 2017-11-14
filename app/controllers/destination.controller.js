@@ -22,6 +22,11 @@ function getAllDestinations(callback) {
   })
 }
 
+function deleteAllDestinations(callback) {
+  Destination.remove()
+  callback(200, { success: true })
+}
+
 function getDestinationWithID(id, callback) {
   Destination.find({
     destinationID: id,
@@ -107,15 +112,6 @@ function getDestinationOfUserWithUsername(username, callback) {
   })
 }
 
-function updateDestinationOfUserWithUsername(username, destinationID, callback) {
-  User.update({ username }, { destination: destinationID }, (err, raw) => {
-    if (!err) {
-      callback(200, { success: true, message: raw })
-    } else {
-      callback(500, { success: false, destination: err })
-    }
-  })
-}
 
 module.exports = {
   getAllDestinations,
@@ -124,5 +120,5 @@ module.exports = {
   updateDestinationWithID,
   deleteDestinationWithID,
   getDestinationOfUserWithUsername,
-  updateDestinationOfUserWithUsername,
+  deleteAllDestinations,
 }
