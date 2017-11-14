@@ -46,7 +46,7 @@ router.route('/:username/')
     // Get user info
     Auth.authenticateUser(req.params.username, req, (authenticated) => {
       if (authenticated) {
-        UserController.getUserWithUsername(req.params.username, (status, response) => {
+        UserController.getUserByUsername(req.params.username, (status, response) => {
           res.status(status)
           res.json(response)
         })
