@@ -6,10 +6,17 @@
     "start": "node app/server.js",
     "start:dev": "nodemon app/server.js",
     "test": "npm run-script lint",
-    "lint": "eslint app/**",
-    "lint:fix": "eslint --fix app/**"
+    "lint": "eslint app/**/*.js",
+    "lint:fix": "eslint --fix app/**/*.js"
   },
   "author": "Sebastian Limbach",
+  "contributors": [
+    {
+      "name":"Tobias Reim",
+      "email": "reim.tobias@gmail.com",
+      "url": "https://treim.de"
+    }
+  ],
   "license": "MIT",
   "private": true,
   "dependencies": {

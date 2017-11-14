@@ -5,27 +5,26 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  location: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Location',
+  token: {
+    type: String,
     required: true,
+  },
+  latitude: {
+    type: Number,
+    default: 0,
+  },
+  longitude: {
+    type: Number,
+    default: 0,
+  },
+  message: {
+    type: String,
+    default: '',
   },
   destination: {
     type: Number,
     ref: 'Destination',
     default: null,
-  },
-  token: {
-    type: String,
-    required: true,
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
   },
 })
 

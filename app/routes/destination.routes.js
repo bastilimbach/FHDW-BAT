@@ -35,6 +35,18 @@ router.route('/')
     }
   })
 
+  .delete((req, res) => {
+    //  Delete all destinations
+    if (Auth.isAdmin(req)) {
+      DestinationController.deleteAllDestinations((status, response) => {
+        res.status(status)
+        res.json(response)
+      })
+    } else {
+      res.status(401).json({ success: false, message: 'Unauthorized' })
+    }
+  })
+
 router.route('/:destinationID/')
   .get((req, res) => {
     // Get destination info

@@ -19,14 +19,6 @@ const DestinationSchema = new mongoose.Schema({
     default: 0,
     required: true,
   },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
 })
 
 /**
