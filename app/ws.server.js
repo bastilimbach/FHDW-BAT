@@ -10,9 +10,10 @@ function createServer() {
       key: fs.readFileSync(`/certs/letsencrypt/live/${config.server.domain}/privkey.pem`),
       cert: fs.readFileSync(`/certs/letsencrypt/live/${config.server.domain}/cert.pem`),
       ca: fs.readFileSync(`/certs/letsencrypt/live/${config.server.domain}/chain.pem`),
-      port: 8080,
     }
-    wsServer = new WebSocket.Server(https.createServer(serverOptions))
+    let websockethttpsserver=https.createServer(serverOptions)
+    websockethttpsserver.listen("8080")
+    wsServer = new WebSocket.Server({server: websockethttpsserver})
   } else {
     wsServer = new WebSocket.Server({port:8080})
   }
