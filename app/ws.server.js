@@ -1,6 +1,7 @@
 const WebSocket = require('ws')
 const https = require('https')
 const fs = require('fs')
+const config = require('./config')
 
 function createServer() {
   var wsServer
