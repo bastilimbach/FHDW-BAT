@@ -17,10 +17,6 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  uptodate: {
-    type: Boolean,
-    default: 0,
-  },
   message: {
     type: String,
     default: '',

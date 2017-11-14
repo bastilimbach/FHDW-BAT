@@ -11,7 +11,11 @@
   },
   "author": "Sebastian Limbach",
   "contributors": [
-    "Tobias Reim"
+    {
+      "name":"Tobias Reim",
+      "email": "reim.tobias@gmail.com",
+      "url": "https://treim.de"
+    }
   ],
   "license": "MIT",
   "private": true,
