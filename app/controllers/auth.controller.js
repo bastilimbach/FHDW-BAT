@@ -6,18 +6,22 @@ function isAdmin(req) {
 }
 
 function authenticateUser(username, req, callback) {
-  User.find({
-    username,
-    token: req.token,
-  }, (err, res) => {
-    if (res.length) {
-      callback(true)
-    } else if (req.token === config.adminToken) {
-      callback(true)
-    } else {
-      callback(false)
-    }
-  })
+  if (/^[a-zA-Z0-9_]+?/.test(username)) {
+    User.find({
+      username,
+      token: req.token,
+    }, (err, res) => {
+      if (res.length) {
+        callback(true)
+      } else if (req.token === config.adminToken) {
+        callback(true)
+      } else {
+        callback(false)
+      }
+    })
+  } else {
+    callback(false)
+  }
 }
 
 module.exports = { isAdmin, authenticateUser }
