@@ -3,6 +3,7 @@ const markerCoordinates = { lat: 50.98382, lng: 7.1174013 }
 let marker
 let map
 let directionsService
+let destination = []
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 15,
@@ -42,19 +43,30 @@ function getDuration(origin, destination, callback) {
 }
 
 const ws = new WebSocket('wss://gcp.sebastianlimbach.com/')
+// const ws = new WebSocket('ws://localhost:3000/')
 ws.onmessage = function (event) {
   const wsData = JSON.parse(event.data)
   switch (wsData.type) {
     case 'location':
-      const lat = wsData.location.latitude
-      const lng = wsData.location.latitude
-      moveMarker(lat, lng)
-      if (wsData.destination !== 'null' && typeof wsData.destination !== 'undefined') {
-        getDuration([lat, lng], [wsData.destination.latitude, wsData.destination.longitude], (time) => {
+      const locationLat = wsData.location.latitude
+      const locationLng = wsData.location.longitude
+      moveMarker(locationLat, locationLng)
+      if (destination.length === 2) {
+        getDuration([locationLat, locationLng], destination, (time) => {
           document.getElementById('time').innerHTML = time
         })
       } else {
         document.getElementById('time').innerHTML = 'Hat kein Ziel'
+      }
+      break
+    case 'destination':
+      console.log(wsData.destination)
+      if (Object.keys(wsData.destination).length === 0 && wsData.destination.constructor === Object) {
+        console.log("Empty")
+        destination = []
+      } else {
+        console.log("Full")
+        destination = [wsData.destination[0].latitude, wsData.destination[0].longitude]
       }
       break
     case 'message':
