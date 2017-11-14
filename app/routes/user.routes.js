@@ -169,7 +169,7 @@ router.route('/:username/message')
   .get((req, res) => {
     Auth.authenticateUser(req.params.username, req, (authenticated) => {
       if (authenticated) {
-        UserController.getMessageUsername(req.params.username, (status, response) => {
+        UserController.getMessageByUsername(req.params.username, (status, response) => {
           res.status(status)
           res.json(response)
         })
