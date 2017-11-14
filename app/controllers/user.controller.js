@@ -5,7 +5,13 @@ function getAllUsers(callback) {
     if (!err) {
       const userMap = []
       users.forEach((user) => {
-        userMap.push(user)
+        userMap.push({
+          username: user.username,
+          location: {
+            latitude: user.latitude,
+            longitude: user.longitude,
+          },
+        })
       })
       callback(200, { success: true, users: userMap })
     } else {

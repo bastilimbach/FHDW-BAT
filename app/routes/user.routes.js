@@ -4,6 +4,7 @@ const DestinationController = require('../controllers/destination.controller')
 const Auth = require('../controllers/auth.controller')
 const wsServer = require('../ws.server')
 const Crypto = require('crypto')
+
 const router = express.Router()
 const wss = wsServer.createServer()
 
