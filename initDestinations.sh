@@ -1,5 +1,5 @@
-DOMAIN="https://gcp.sebastianlimbach.com"
-TOKEN="sebastian"
+# DOMAIN="https://gcp.sebastianlimbach.com"
+# TOKEN="sebastian"
 
 curl -X DELETE \
   ${DOMAIN}/destination/ \

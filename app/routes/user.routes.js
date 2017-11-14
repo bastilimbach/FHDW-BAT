@@ -149,6 +149,11 @@ router.route('/:username/destination')
     //  Update user destination
     Auth.authenticateUser(req.params.username, req, (authenticated) => {
       if (authenticated) {
+        DestinationController.getDestinationWithID(req.body.destinationID, (status, response) => {
+          if (status === 200) {
+            eventBus.emit('destinationUpdate', response.destination)
+          }
+        })
         UserController.updateDestinationOfUserWithUsername(req.params.username, req.body.destinationID, (status, response) => {
           res.status(status)
           res.json(response)

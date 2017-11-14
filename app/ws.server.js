@@ -7,6 +7,9 @@ function createServer(server) {
     eventBus.on('locationUpdate', (location) => {
       ws.send(JSON.stringify({ type: 'location', location }))
     })
+    eventBus.on('destinationUpdate', (destination) => {
+      ws.send(JSON.stringify({ type: 'destination', destination }))
+    })
     eventBus.on('messageUpdate', (message) => {
       ws.send(JSON.stringify({ type: 'message', message }))
     })
