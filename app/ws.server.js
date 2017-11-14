@@ -1,14 +1,16 @@
 const WebSocket = require('ws')
+const eventBus = require('./eventBus')
 
-function createServer() {
-  const wsServer = new WebSocket.Server({ port: 8080 })
+function createServer(server) {
+  const wsServer = new WebSocket.Server({ server })
   wsServer.on('connection', (ws) => {
-    wsServer.client = ws
+    eventBus.on('locationUpdate', (location) => {
+      ws.send(JSON.stringify({ type: 'location', location }))
+    })
+    eventBus.on('messageUpdate', (message) => {
+      ws.send(JSON.stringify({ type: 'message', message }))
+    })
   })
-  wsServer.sendMsg = function sendMsg(msg) {
-    if (wsServer.client !== undefined && wsServer.client.readyState === WebSocket.OPEN)wsServer.client.send(msg)
-  }
-  return wsServer
 }
 
 module.exports = { createServer }
