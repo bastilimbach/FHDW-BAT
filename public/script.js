@@ -61,11 +61,9 @@ ws.onmessage = function (event) {
       break
     case 'destination':
       console.log(wsData.destination)
-      if (Object.keys(wsData.destination).length === 0 && wsData.destination.constructor === Object) {
-        console.log("Empty")
+      if (Object.keys(wsData.destination).length) {
         destination = []
       } else {
-        console.log("Full")
         destination = [wsData.destination[0].latitude, wsData.destination[0].longitude]
       }
       break
