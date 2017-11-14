@@ -2,7 +2,7 @@ const WebSocket = require('ws')
 const https = require('https')
 
 function createServer() {
-  const wsServer
+  var wsServer
   if (process.env.NODE_ENV === 'production') {
     const serverOptions = {
       key: fs.readFileSync(`/certs/letsencrypt/live/${config.server.domain}/privkey.pem`),
