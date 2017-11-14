@@ -1,21 +1,33 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="style.css">
-    <title>Mainpage</title>
-</head>
-<body>
-    <h1>Hello World</h1>
-    <script>
-        var ws = new WebSocket('ws://localhost:8080')
-        ws.onmessage = function (event) {
-            alert(event.data);
-        }
-        ws.onopen = function (event) {
-            alert("Socket connected");
-        }
-    </script>
-</body>
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA830pjkq_FQY1MkDCpShsfxLTy3ALZBQA&callback=initMap"></script>
+		<script src="script.js"></script>
+        <title>Boss Arrival Time</title>
+    </head>
+        <body>
+			<main>
+				<div id="map"></div>
+              	<div class="sidebar">
+              		<div class="headerContainer">
+						<h1>BAT</h1>
+						<small>Boss Arrival Time </br><a href="impressum.html" target="_blank">Impressum</a></small>
+              		</div>
+					<div class="messageTitle">
+					<h5>Zeit bis zur Ankunft</h5>
+					</div>
+              		<div class="messageContainer">
+						<p id="time">Lorem Ipsum</p>
+             		</div>
+					<div class="messageTitle">
+						<h5>Message</h5>
+					</div>
+					<div class="messageContainer">
+						<p id="userMessage">Lorem Ipsum</p>
+             		</div>
+             	</div>
+             </main>  
+        </body>
 </html>
