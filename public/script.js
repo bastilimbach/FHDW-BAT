@@ -42,8 +42,8 @@ function getDuration(origin, destination, callback) {
   })
 }
 
-const ws = new WebSocket('wss://gcp.sebastianlimbach.com/')
-// const ws = new WebSocket('ws://localhost:3000/')
+// const ws = new WebSocket('wss://gcp.sebastianlimbach.com/')
+const ws = new WebSocket('ws://localhost:3000/')
 ws.onmessage = function (event) {
   const wsData = JSON.parse(event.data)
   switch (wsData.type) {
@@ -51,9 +51,9 @@ ws.onmessage = function (event) {
       const locationLat = wsData.location.latitude
       const locationLng = wsData.location.longitude
       moveMarker(locationLat, locationLng)
-      if (destination.length === 2) {
-        getDuration([locationLat, locationLng], destination, (time) => {
-          document.getElementById('time').innerHTML = time
+      if (Object.keys(destination).length !== 0) {
+        getDuration([locationLat, locationLng], [destination.latitude, destination.longitude], (time) => {
+          document.getElementById('time').innerHTML = time + " to " + destination.name
         })
       } else {
         document.getElementById('time').innerHTML = 'Hat kein Ziel'
@@ -62,9 +62,9 @@ ws.onmessage = function (event) {
     case 'destination':
       console.log(wsData.destination)
       if (Object.keys(wsData.destination).length === 0) {
-        destination = []
+        destination = {}
       } else {
-        destination = [wsData.destination[0].latitude, wsData.destination[0].longitude]
+        destination = wsData.destination[0]
       }
       break
     case 'message':
