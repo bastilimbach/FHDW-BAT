@@ -42,8 +42,8 @@ function getDuration(origin, destination, callback) {
   })
 }
 
-// const ws = new WebSocket('wss://gcp.sebastianlimbach.com/')
-const ws = new WebSocket('ws://localhost:3000/')
+const ws = new WebSocket('wss://gcp.sebastianlimbach.com/')
+// const ws = new WebSocket('ws://localhost:3000/')
 ws.onmessage = function (event) {
   const wsData = JSON.parse(event.data)
   switch (wsData.type) {
