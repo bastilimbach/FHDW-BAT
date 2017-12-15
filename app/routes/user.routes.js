@@ -23,7 +23,7 @@ router.route('/')
   .post((req, res) => {
     //  Create new user
     if (Auth.isAdmin(req)) {
-      Crypto.randomBytes(12, (cryptoError, buffer) => {
+      Crypto.randomBytes(6, (cryptoError, buffer) => {
         if (!cryptoError) {
           const creationParams = {
             username: req.body.username,
