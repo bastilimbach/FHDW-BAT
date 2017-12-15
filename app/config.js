@@ -1,6 +1,6 @@
 module.exports = {
   server: {
-    domain: process.env.DOMAIN || 'gcp.sebastianlimbach.com',
+    domain: process.env.DOMAIN || 'localhost',
     port: 3000,
   },
   db: {
@@ -12,5 +12,5 @@ module.exports = {
       reconnectTries: 30,
     },
   },
-  adminToken: process.env.API_ADMIN_TOKEN || 'sebastian',
+  adminToken: process.env.API_ADMIN_TOKEN || 'admin',
 }
