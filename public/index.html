@@ -1,33 +1,52 @@
 <!DOCTYPE html>
 <html>
-    <head>
-		<meta charset="utf-8">
-		<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
-		<script src="script.js"></script>
-        <title>Boss Arrival Time</title>
-    </head>
-        <body>
-			<main>
-				<div id="map"></div>
-              	<div class="sidebar">
-              		<div class="headerContainer">
-						<h1>BAT</h1>
-						<small>Boss Arrival Time </br><a href="impressum.html" target="_blank">Impressum</a></small>
-              		</div>
-					<div class="messageTitle">
-						<h5>Zeit bis zur Ankunft</h5>
-					</div>
-              		<div class="messageContainer">
-						<p id="time"></p>
-             		</div>
-					<div class="messageTitle">
-						<h5>Message</h5>
-					</div>
-					<div class="messageContainer">
-						<p id="userMessage"></p>
-             		</div>
-             	</div>
-			 </main>
-			<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA830pjkq_FQY1MkDCpShsfxLTy3ALZBQA&callback=initMap"></script>
-        </body>
+
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+	<script src="script.js"></script>
+	<title>Boss Arrival Time</title>
+</head>
+
+<body>
+	<main>
+		<a href="https://github.com/bastilimbach/FHDW-BAT">
+			<img style="position: absolute; top: 0; left: 0; border: 0; z-index: 9;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67"
+			 alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png">
+		</a>
+		<div id="map"></div>
+		<div class="sidebar">
+			<div class="top">	
+				<div class="headerContainer">
+					<h1>BAT</h1>
+					<small>Boss Arrival Time </br>
+						<a href="impressum.html" target="_blank">Imprint</a>
+					</small>
+				</div>
+				<div class="messageTitle">
+					<h5>Time to arrival</h5>
+				</div>
+				<div class="messageContainer">
+					<p id="time"></p>
+				</div>
+				<div class="messageTitle">
+					<h5>Message</h5>
+				</div>
+				<div class="messageContainer">
+					<p id="userMessage"></p>
+				</div>
+			</div>
+			<div class="bottom">
+				<div class="messageContainer">
+					<p>To track your own location, you need to download either the <a href="https://github.com/bastilimbach/fhdw-bat-app">iOS</a> or <a href="">Android</a> version of the companion app.</p>
+				</div>
+				<div class="fhdwLogo">
+				<img src="FHDW.jpg" alt="">
+				</div>
+			</div>
+		</div>
+	</main>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA830pjkq_FQY1MkDCpShsfxLTy3ALZBQA&callback=initMap"></script>
+</body>
+
 </html>
